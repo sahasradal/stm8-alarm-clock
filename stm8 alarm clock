@@ -112,10 +112,10 @@ write_address.b equ $4e
 DS1307_write_address.b equ $D0
 data_command1.b equ $09			;0b00001001
 data_command2.b equ $0D			;0b00001101
-data_command3.b equ $09			;0b00001001		;
+data_command3.b equ $FB			;0b11111011		;
 inst_command1.b equ $08			;0b00001000		;
 inst_command2.b equ $0C			;0b00001100		;
-inst_command3.b equ $08			;0b00001000		;
+inst_command3.b equ $FB			;0b11111011		;
 day dc.B "00MOTUWETHFRSASU"
 string  dc.B "Hello world!\0"
 
@@ -303,7 +303,7 @@ nibble_write_instruction
 	
 	ld A,pad1                ;copies data for upper nibble operation with inst_command3
 	AND A,#$F0               ;upper nibble is preserved in register nibble1
-	OR A,#inst_command3
+	AND A,#inst_command3
 	ld buffer2,A
 	call write_data
 	mov buffer1,#20
@@ -330,7 +330,7 @@ nibble_write_instruction
 	ld A,pad1             	 ;copies data for upper nibble operation
 	swap A                   ;previous lower nibble is swapped to high nibble position
 	AND A,#$F0               ;upper nibble is preserved in register nibble1
-	OR A,#inst_command3
+	AND A,#inst_command3
 	ld buffer2,A
 	call write_data
 	mov buffer1,#20
@@ -363,7 +363,7 @@ nibble_write_data
 	
 	ld A,pad1             	 ;copies data for upper nibble operation with inst_command3
 	AND A,#$F0               ;upper nibble is preserved in register nibble1
-	OR A,#data_command3
+	AND A,#data_command3
 	ld buffer2,A
 	call write_data
 	mov buffer1,#20
@@ -390,7 +390,7 @@ nibble_write_data
 	ld A,pad1             	 ;copies data for upper nibble operation
 	swap A                   ;previous lower nibble is swapped to high nibble position
 	AND A,#$F0               ;upper nibble is preserved in register nibble1
-	OR A,#data_command3
+	AND A,#data_command3
 	ld buffer2,A
 	call write_data
 	mov buffer1,#20
